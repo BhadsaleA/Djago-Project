@@ -2,12 +2,21 @@ from django.shortcuts import render,redirect
 from .models import *
 import stripe
 from datetime import datetime,timedelta
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
     course = Course.objects.all()
     context = {'coureses':course}
+
+    # if request.user.is_authenticated:
+    #     profile = Profile.objects.filter(user = request.user).first()
+    #     request.session['profile'] = profile.is_pro
+    #     return render(request,'home.html',context)
     return render(request,'home.html',context)
+
 
 def CourseView(request,slug):
     course = Course.objects.filter(slug=slug).first()
@@ -17,6 +26,48 @@ def CourseView(request,slug):
 
 def charge(request):
     return render(request,'harge.html')
+
+def Login(request):
+    if request.method =='POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if username is None:
+            context = {'message':'User does not register'}
+            return render(request,'register.html')
+        else:
+            user = authenticate(username=username,password=password)
+            if user is None:
+                context = {'message':'wrong password'}
+                return render(request,'login.html')
+            else:
+                login(request,user)
+                return redirect('/')
+    
+    return render(request,'login.html')
+
+def Logout(request):
+    logout(request)
+    return redirect('/')
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = User.objects.filter(username=username).first()
+
+        if user :
+            context = {'message':'User already registered'}
+            return render(request,'register.html',context)
+        else:
+            user =User(username=username,email=email)
+            user.set_password(password)
+            user.save()
+            context = {'message':'User registered..!'}
+            return render(request,'register.html')
+    return render(request,'register.html')
 
 def become_pro(request):
     if request.method =='POST':

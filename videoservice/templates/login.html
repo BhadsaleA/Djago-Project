@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block start %}
+
+<div class="container mt-5">
+    <h3>Login</h3>
+
+    <form class="mx-auto" method="POST">
+        {% if message %} <div class="alert alert-info">{{message}}</div>{% endif %}
+
+        {% csrf_token %}
+        <div class="col-md-6">
+            <label>UserName</label>
+            <input type="text" name="username" placeholder="Enter username" class="form-control">
+        </div>
+        
+        <div class="col-md-6">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter Password" class="form-control">
+        </div>
+        
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary mt-4">Login</button>
+        </div>
+        
+    </form>
+</div> 
+
+
+
+{% endblock %}
