@@ -12,9 +12,9 @@ def home(request):
     context = {'coureses':course}
 
     # if request.user.is_authenticated:
-    #     profile = Profile.objects.filter(user = request.user).first()
-    #     request.session['profile'] = profile.is_pro
-    #     return render(request,'home.html',context)
+        # profile = Profile.objects.filter(user = request.user).first()
+        # request.session['profile'] = profile.is_pro
+        # return render(request,'home.html',context)
     return render(request,'home.html',context)
 
 
