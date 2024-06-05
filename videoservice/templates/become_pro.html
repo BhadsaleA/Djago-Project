@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block start %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>Why become pro?</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora error maxime exercitationem optio consequatur, quasi quos doloremque aut ratione! Distinctio minima laboriosam vel. Fugit eos minus magnam quas. Nesciunt, atque!</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Membership type </label>
+                    <select class="form-control" name="membership">
+                        <option>Choose</option>
+                        <option value="MONTHLY">MONTHLY-1000₹</option>
+                        <option value="YEARLY">YEARLY -11000₹</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary">Become pro</button>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <img src="https://images.freeimages.com/vhq/images/previews/abd/man-finishing-his-job-vector-65100.jpg?fmt=webp&h=350" class="img-responsive">
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

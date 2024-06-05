@@ -1,8 +1,21 @@
 from django.db import models
 from django.utils.text import slugify
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 
 # Create your models here.
+SUBSCRIPTION = (
+    ('F','FREE'),
+    ('M','MONTHLY'),
+    ('Y','YEARLY')
+)
+
+class Profile(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    is_pro = models.BooleanField(default=False)
+    pro_expiry_date = models.DateTimeField(null=True,blank=True)
+    subscription_type = models.CharField(max_length=100,choices=SUBSCRIPTION,default='FREE')
+
 class Course(models.Model):
     Course_name = models.CharField(max_length=225)
     Course_description = RichTextField()
